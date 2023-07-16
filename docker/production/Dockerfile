@@ -6,7 +6,7 @@ RUN npm install
 RUN npm run build
 RUN rm -rf node_modules
 
-FROM composer:2 as build_composer
+FROM composer:2.4 as build_composer
 WORKDIR /app
 COPY --from=build_frontend /app /app
 RUN composer install --no-dev --ignore-platform-reqs --no-interaction
@@ -16,7 +16,7 @@ FROM ubuntu:22.04
 WORKDIR /var/www/html
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV TZ=UTC
+ENV TZ=Asia/Manila
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
