@@ -1,4 +1,4 @@
-FROM node:16 as build_frontend
+FROM node:18 as build_frontend
 
 WORKDIR /app
 COPY . /app
@@ -11,7 +11,7 @@ WORKDIR /app
 COPY --from=build_frontend /app /app
 RUN composer install --no-dev --ignore-platform-reqs --no-interaction
 
-FROM ubuntu:22.04
+FROM ubuntu:22.10
 
 ARG POSTGRES_VERSION=14
 
@@ -33,13 +33,13 @@ RUN apt-get update \
     && gpg --export 0x14aa40ec0831756756d7f66c4f4ea0aae5267a6c > /usr/share/keyrings/ppa_ondrej_php.gpg \
     && echo "deb [signed-by=/usr/share/keyrings/ppa_ondrej_php.gpg] https://ppa.launchpadcontent.net/ondrej/php/ubuntu jammy main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
     && apt-get update \
-    && apt-get install -y php8.1-cli php8.1-fpm \
-       php8.1-pgsql php8.1-sqlite3 php8.1-gd \
-       php8.1-curl \
-       php8.1-mysql php8.1-mbstring \
-       php8.1-xml php8.1-zip php8.1-bcmath \
-       php8.1-intl php8.1-readline \
-       php8.1-msgpack php8.1-igbinary php8.1-redis \
+    && apt-get install -y php8.2-cli php8.2-fpm \
+       php8.2-pgsql php8.2-sqlite3 php8.2-gd \
+       php8.2-curl \
+       php8.2-mysql php8.2-mbstring \
+       php8.2-xml php8.2-zip php8.2-bcmath \
+       php8.2-intl php8.2-readline \
+       php8.2-msgpack php8.2-igbinary php8.2-redis \
     && curl -sS https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /usr/share/keyrings/pgdg.gpg >/dev/null \
     && echo "deb [signed-by=/usr/share/keyrings/pgdg.gpg] http://apt.postgresql.org/pub/repos/apt jammy-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
     && apt-get update \
