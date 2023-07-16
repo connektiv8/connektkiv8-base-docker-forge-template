@@ -11,7 +11,7 @@ WORKDIR /app
 COPY --from=build_frontend /app /app
 RUN composer install --no-dev --ignore-platform-reqs --no-interaction
 
-FROM ubuntu:22.10
+FROM ubuntu:22.04
 
 ARG POSTGRES_VERSION=14
 
